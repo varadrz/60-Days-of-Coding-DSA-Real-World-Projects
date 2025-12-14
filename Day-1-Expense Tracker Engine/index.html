@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Analyzer – Day 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 30px;
+        }
+        .container {
+            max-width: 900px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background: #e5e7eb;
+        }
+        .stats {
+            margin-top: 20px;
+            background: #eef2ff;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Expense Analyzer</h2>
+    <p><strong>Day 1 – DSA Focused Project</strong></p>
+
+    <!-- Input -->
+    <input type="date" id="date">
+    <input type="number" id="amount" placeholder="Amount">
+    <input type="text" id="category" placeholder="Category">
+    <button onclick="addExpense()">Add Expense</button>
+
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount (₹)</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <!-- Stats -->
+    <div class="stats" id="stats">
+        <p>Total Expense: ₹0</p>
+        <p>Average Per Day: ₹0</p>
+        <p>Category-wise Expense:</p>
+        <ul></ul>
+    </div>
+</div>
+
+<script>
+    // ===== DSA STORAGE =====
+    const expenses = [];   // Array
+
+    function addExpense() {
+        const date = document.getElementById("date").value;
+        const amount = Number(document.getElementById("amount").value);
+        const category = document.getElementById("category").value;
+
+        if (!date || !amount || !category) {
+            alert("Fill all fields");
+            return;
+        }
+
+        expenses.push({ date, amount, category }); // Array insert
+        addRow(date, category, amount);
+        calculateStats();
+
+        document.getElementById("amount").value = "";
+        document.getElementById("category").value = "";
+    }
+
+    function addRow(date, category, amount) {
+        const row = document.getElementById("tableBody").insertRow();
+        row.insertCell(0).innerText = date;
+        row.insertCell(1).innerText = category;
+        row.insertCell(2).innerText = amount;
+    }
+
+    function calculateStats() {
+        let total = 0;
+        const daySet = new Set();          // Set
+        const categoryMap = {};            // Hash Map
+
+        for (let e of expenses) {
+            total += e.amount;
+            daySet.add(e.date);
+
+            categoryMap[e.category] =
+                (categoryMap[e.category] || 0) + e.amount;
+        }
+
+        const avg = daySet.size ? (total / daySet.size).toFixed(2) : 0;
+
+        const statsDiv = document.getElementById("stats");
+        const ul = statsDiv.querySelector("ul");
+        ul.innerHTML = "";
+
+        statsDiv.innerHTML = `
+            <p><strong>Total Expense:</strong> ₹${total}</p>
+            <p><strong>Average Per Day:</strong> ₹${avg}</p>
+            <p><strong>Category-wise Expense:</strong></p>
+            <ul></ul>
+        `;
+
+        const newUl = statsDiv.querySelector("ul");
+        for (let cat in categoryMap) {
+            const li = document.createElement("li");
+            li.innerText = `${cat}: ₹${categoryMap[cat]}`;
+            newUl.appendChild(li);
+        }
+    }
+</script>
+
+</body>
+</html>
