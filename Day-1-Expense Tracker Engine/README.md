@@ -1,7 +1,6 @@
 # 60 DAYS OF CODING | DSA x REAL WORLD PROJECTS
 
 ## Day 1 | Expense Tracker Engine
-
 ### Overview
 This project is part of the **60 Days of Coding | DSA x Real World Projects** initiative.  
 Day 1 focuses on applying **fundamental Data Structures and Algorithms** to solve a practical and relatable problem, expense analysis.
@@ -10,6 +9,8 @@ The goal of this project is to demonstrate how core DSA concepts such as arrays,
 
 The primary implementation is done using **Python** with a console based interface.  
 An optional **HTML and JavaScript prototype** is included to show how the same DSA logic can be applied in a frontend environment.
+
+<img width="1032" height="877" alt="Expense_Analyzer" src="https://github.com/user-attachments/assets/3335cc9f-995e-4dbd-a4d1-054a84859442" />
 
 ---
 
